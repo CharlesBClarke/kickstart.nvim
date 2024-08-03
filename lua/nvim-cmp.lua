@@ -11,12 +11,14 @@ if not luasnip_status then
 end
 
 -- load VSCode-like snippets from plugins (e.g., friendly-snippets)
-
-
 require("luasnip/loaders/from_vscode").lazy_load()
 
 vim.opt.completeopt = "menu,menuone,noselect"
 
+-- Update LSP capabilities to include nvim-cmp specific capabilities
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+-- Setup nvim-cmp
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -40,3 +42,6 @@ cmp.setup({
     { name = "path" }, -- file system paths
   }),
 })
+
+-- Export capabilities for use in init.lua
+return capabilities

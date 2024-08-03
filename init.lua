@@ -1,5 +1,3 @@
--- init.lua
-
 -- Bootstrapping packer.nvim
 local ensure_packer = function()
     local fn = vim.fn
@@ -30,6 +28,7 @@ require('packer').startup(function(use)
     use 'hrsh7th/nvim-cmp'        -- Completion plugin
     use 'hrsh7th/cmp-buffer'      -- Source for text in buffer
     use 'hrsh7th/cmp-path'        -- Source for file system paths
+    use 'hrsh7th/cmp-nvim-lsp'    -- Source for LSP
     -- Snippets
     use 'L3MON4D3/LuaSnip'        -- Snippet engine
     use 'saadparwaiz1/cmp_luasnip' -- For autocompletion
@@ -45,6 +44,9 @@ vim.g.mapleader = " "             -- Set leader key to space
 vim.cmd("colorscheme gruvbox")
 vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
 vim.cmd("hi NonText guibg=NONE ctermbg=NONE")
+
+-- Import capabilities from nvim-cmp.lua
+local capabilities = require('nvim-cmp')
 
 -- LSP Configuration
 local on_attach = function(client, bufnr)
@@ -82,11 +84,13 @@ end
 
 -- Setup for clangd (C/C++)
 require('lspconfig').clangd.setup{
+    capabilities = capabilities,
     on_attach = on_attach,
 }
 
 -- Setup for haskell-language-server
 require('lspconfig').hls.setup{
+    capabilities = capabilities,
     on_attach = on_attach,
     settings = {
         haskell = {
@@ -102,29 +106,6 @@ require('nvim-treesitter.configs').setup {
     additional_vim_regex_highlighting = false,
   },
 }
-
--- Enable completion
-local cmp = require'cmp'
-cmp.setup({
-    snippet = {
-        expand = function(args)
-            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        end,
-    },
-    mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    }),
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' }, -- For luasnip users.
-    }, {
-        { name = 'buffer' },
-    })
-})
 
 -- vimtex configuration
 vim.g.vimtex_view_method = 'zathura'
