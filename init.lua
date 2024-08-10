@@ -47,6 +47,16 @@ vim.cmd("hi NonText guibg=NONE ctermbg=NONE")
 
 -- Import capabilities from nvim-cmp.lua
 local capabilities = require('nvim-cmp')
+--Kemaps terminal shit
+vim.api.nvim_set_keymap('t', '<Esc><Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-t>', ':term<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<C-t>', [[<C-\><C-n>:q!<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<C-h>', [[<C-\><C-n><C-w>h]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<C-j>', [[<C-\><C-n><C-w>j]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<C-k>', [[<C-\><C-n><C-w>k]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<C-l>', [[<C-\><C-n><C-w>l]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<C-q>', [[<C-\><C-n>:q<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-\\>', ':split term://$SHELL<CR>', { noremap = true, silent = true })
 
 -- LSP Configuration
 local on_attach = function(client, bufnr)
