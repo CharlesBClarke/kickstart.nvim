@@ -32,7 +32,16 @@ require('packer').startup(function(use)
     -- Snippets
     use 'L3MON4D3/LuaSnip'        -- Snippet engine
     use 'saadparwaiz1/cmp_luasnip' -- For autocompletion
-    use 'rafamadriz/friendly-snippets' -- Useful snippets
+    --nvim-surround 
+    use({
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+        require("nvim-surround").setup({
+            -- Configuration here, or leave empty to use defaults
+        })
+    end
+})   use 'rafamadriz/friendly-snippets' -- Useful snippets
 end)
 
 -- General settings
@@ -120,3 +129,23 @@ require('nvim-treesitter.configs').setup {
 -- vimtex configuration
 vim.g.vimtex_view_method = 'zathura'
 vim.g.vimtex_compiler_method = 'latexmk'
+
+-- boiler
+function InsertBoilerplate(filetype)
+    local templates = {
+        leet = "/home/owner/Templates/leet.txt",
+        cmake = "/home/owner/Templates/cmake.txt",
+        -- Add more file types and templates as needed
+    }
+
+    local template = templates[filetype]
+    if template then
+        vim.cmd("read " .. template)
+    else
+        print("No template found for filetype: " .. filetype)
+    end
+end
+
+vim.api.nvim_create_user_command('Boiler', function(opts)
+    InsertBoilerplate(opts.args)
+end, { nargs = 1 })
