@@ -22,6 +22,8 @@ require('packer').startup(function(use)
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
     }
+    --debugger
+    use 'mfussenegger/nvim-dap'
     -- LaTeX support
     use 'lervag/vimtex'
     -- Autocompletion
@@ -117,7 +119,23 @@ require('lspconfig').hls.setup{
         }
     }
 }
+-- Setup for Rust
+local lspconfig = require('lspconfig')
 
+lspconfig.rust_analyzer.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    settings = {
+        ["rust-analyzer"] = {
+            cargo = {
+                allFeatures = true
+            },
+            checkOnSave = {
+                command = "clippy"
+            }
+        }
+    }
+}
 -- Treesitter configuration
 require('nvim-treesitter.configs').setup {
   highlight = {
@@ -127,9 +145,9 @@ require('nvim-treesitter.configs').setup {
 }
 
 -- vimtex configuration
-vim.g.vimtex_view_method = 'zathura'
-vim.g.vimtex_compiler_method = 'latexmk'
-
+require('vimtex')
+-- Dap
+require('dap-config')  -- Correct file name
 -- boiler
 function InsertBoilerplate(filetype)
     local templates = {
