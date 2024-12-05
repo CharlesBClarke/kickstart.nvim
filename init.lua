@@ -107,6 +107,7 @@ end
 require('lspconfig').clangd.setup{
     capabilities = capabilities,
     on_attach = on_attach,
+    cmd = { "clangd", "--compile-commands-dir=" .. vim.fn.getcwd() .. "/build" },
 }
 
 -- Setup for haskell-language-server
@@ -167,3 +168,16 @@ end
 vim.api.nvim_create_user_command('Boiler', function(opts)
     InsertBoilerplate(opts.args)
 end, { nargs = 1 })
+
+if os.getenv("NVIM_AUTO_COMMIT") then
+  vim.api.nvim_create_autocmd("BufWritePost", {
+    pattern = "*",
+    callback = function()
+      vim.cmd("silent !git add . && git commit -m 'Auto commit triggered by Neovim'")
+      print("Auto commit executed.")
+    end,
+  })
+  print("Auto commit enabled for this directory.")
+else
+  print("Auto commit is disabled.")
+end
