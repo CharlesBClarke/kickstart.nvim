@@ -34,6 +34,10 @@ require('packer').startup(function(use)
     -- Snippets
     use 'L3MON4D3/LuaSnip'        -- Snippet engine
     use 'saadparwaiz1/cmp_luasnip' -- For autocompletion
+    use {
+        'jose-elias-alvarez/null-ls.nvim', -- For integrating external formatters and linters
+        requires = { 'nvim-lua/plenary.nvim' },
+    }
     --nvim-surround 
     use({
     "kylechui/nvim-surround",
@@ -56,8 +60,10 @@ vim.cmd("colorscheme gruvbox")
 vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
 vim.cmd("hi NonText guibg=NONE ctermbg=NONE")
 
--- Import capabilities from nvim-cmp.lua
-local capabilities = require('nvim-cmp')
+-- Import capabilities from cmp_nvim_lsp
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
 --Kemaps terminal shit
 vim.api.nvim_set_keymap('t', '<Esc><Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-t>', ':term<CR>', { noremap = true, silent = true })
@@ -71,6 +77,7 @@ vim.api.nvim_set_keymap('n', '<C-\\>', ':split term://$SHELL<CR>', { noremap = t
 
 -- LSP Configuration
 local on_attach = function(client, bufnr)
+    print("LSP attached:", client.name)
     -- Enable LSP-based formatting
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -93,7 +100,8 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format({ async=true }) end, bufopts)
 
     -- Format on save
-    if client.server_capabilities.documentFormattingProvider then
+    if client.supports_method("textDocument/formatting") then
+        -- If the client supports formatting
         vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = bufnr,
             callback = function()
@@ -102,6 +110,21 @@ local on_attach = function(client, bufnr)
         })
     end
 end
+
+-- Import null-ls
+local null_ls = require('null-ls')
+
+-- Configure null-ls
+null_ls.setup({
+    sources = {
+        null_ls.builtins.formatting.prettier.with({
+            filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "css", "scss", "less", "html", "json", "yaml", "markdown", "graphql" },
+            extra_args = { "--single-quote", "--jsx-single-quote" },
+        }),
+        -- You can add more formatters or linters here
+    },
+    on_attach = on_attach,
+})
 
 -- Setup for clangd (C/C++)
 require('lspconfig').clangd.setup{
