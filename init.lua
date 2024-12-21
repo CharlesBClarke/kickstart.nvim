@@ -966,7 +966,7 @@ require('lazy').setup({
 })
 
 vim.api.nvim_create_user_command('Fibsplit', function(opts)
-  require('fibonacci').add_new_and_shift(opts.args)
+  require('fibonacci').fibsplit(opts.args)
 end, { nargs = '?', complete = 'file' })
 
 -- The line beneath this is called `modeline`. See `:help modeline`

@@ -27,7 +27,7 @@ local function get_normal_windows()
   return normal_wins
 end
 
-function M.add_new_and_shift(file_path)
+function M.fibsplit(file_path)
   local normal_wins = get_normal_windows()
   if #normal_wins == 0 then
     vim.notify('No normal windows found!', vim.log.levels.ERROR)
@@ -73,8 +73,6 @@ function M.add_new_and_shift(file_path)
   -- Ensure the new buffer is the current buffer
   vim.api.nvim_set_current_win(normal_wins[1])
   vim.api.nvim_set_current_buf(new_buf)
-
-  vim.notify 'New buffer/file placed in first window, others shifted down, last window split!'
 end
 
 return M
