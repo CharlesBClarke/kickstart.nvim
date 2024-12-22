@@ -1,14 +1,13 @@
 local M = {}
 
 local function half_split(vertical)
+  local current_win = vim.api.nvim_get_current_win()
   if vertical then
-    local current_win = vim.api.nvim_get_current_win()
     local current_width = vim.api.nvim_win_get_width(current_win)
     local new_width = math.floor(current_width * 0.5)
 
     vim.cmd(new_width .. 'vsplit')
   else
-    local current_win = vim.api.nvim_get_current_win()
     local current_height = vim.api.nvim_win_get_height(current_win)
     local new_height = math.floor(current_height * 0.5)
 
@@ -73,6 +72,11 @@ function M.fibsplit(file_path)
   -- Ensure the new buffer is the current buffer
   vim.api.nvim_set_current_win(normal_wins[1])
   vim.api.nvim_set_current_buf(new_buf)
+
+  return {
+    new_buf = new_buf,
+    windows_shifted = #normal_wins - 1,
+  }
 end
 
 return M
