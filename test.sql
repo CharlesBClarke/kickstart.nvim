@@ -1,0 +1,10 @@
+--stops
+--(id,name)
+--route
+--(num,company,pos,stop)
+SELECT
+	DISTINCTname_of_stops,
+	'LRT'AScompany,
+	route.num
+FROM
+	route
