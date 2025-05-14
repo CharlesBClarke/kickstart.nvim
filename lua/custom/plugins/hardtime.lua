@@ -1,5 +1,82 @@
 return {
   'm4xshen/hardtime.nvim',
   dependencies = { 'MunifTanjim/nui.nvim' },
-  opts = {},
+  opts = {
+    -- Retaining defaults you might care about
+    max_time = 1000,
+    max_count = 3,
+    disable_mouse = true,
+    hint = true,
+    timeout = 3000,
+    notification = true,
+    allow_different_key = true,
+    enabled = true,
+    force_exit_insert_mode = false,
+    max_insert_idle_ms = 5000,
+    restriction_mode = 'block',
+
+    -- Add your custom mappings to disabled_keys to avoid interference
+    disabled_keys = {
+      [''] = {
+        'n',
+        'N',
+        'e',
+        'E',
+        'i',
+        'I',
+        'm',
+        'M',
+        'j',
+        'J',
+        'k',
+        'K',
+        't',
+        'T',
+        'h',
+        'H',
+        'l',
+        'L',
+        '<C-w>n',
+        '<C-w>e',
+        '<C-w>i',
+        '<C-w>m',
+        '<C-w>J',
+        '<C-w>E',
+        '<C-w>I',
+        '<C-w>M',
+        '<C-w><C-n>',
+        '<C-w><C-e>',
+        '<C-w><C-i>',
+        '<C-w><C-m>',
+      },
+      ['<Up>'] = { '', 'i' },
+      ['<Down>'] = { '', 'i' },
+      ['<Left>'] = { '', 'i' },
+      ['<Right>'] = { '', 'i' },
+    },
+
+    -- Keep default restricted keys unless you want to disable them too
+    restricted_keys = {
+      ['h'] = { 'n', 'x' },
+      ['j'] = { 'n', 'x' },
+      ['k'] = { 'n', 'x' },
+      ['l'] = { 'n', 'x' },
+      ['+'] = { 'n', 'x' },
+      ['gj'] = { 'n', 'x' },
+      ['gk'] = { 'n', 'x' },
+      ['<C-M>'] = { 'n', 'x' },
+      ['<C-N>'] = { 'n', 'x' },
+      ['<C-P>'] = { 'n', 'x' },
+    },
+
+    -- You can leave this or further prune it if needed
+    disabled_filetypes = {
+      ['fugitive'] = true,
+      ['TelescopePrompt'] = true,
+      ['lazy'] = true,
+      ['NvimTree'] = true,
+      ['help'] = true,
+      -- Keep or remove others as needed
+    },
+  },
 }
