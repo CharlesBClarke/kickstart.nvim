@@ -89,6 +89,7 @@
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
+vim.opt.indentkeys:remove ':'
 -- mappings for colmark-dh
 require 'mappings'
 -- Set to true if you have a Nerd Font installed and selected in the terminal
