@@ -776,6 +776,23 @@ require('lazy').setup({
       luasnip.config.setup {}
 
       cmp.setup {
+        sorting = {
+          priority_weight = 2,
+          comparators = {
+            cmp.config.compare.exact, -- exact matches first
+            function(entry1, entry2) -- shorter labels (subsets) before longer
+              local len1 = #entry1.completion_item.label
+              local len2 = #entry2.completion_item.label
+              return len1 < len2
+            end,
+            cmp.config.compare.score, -- use the standard score next
+            cmp.config.compare.offset,
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+          },
+        },
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
@@ -792,9 +809,9 @@ require('lazy').setup({
         -- No, but seriously. Please read `:help ins-completion`, it is really good!
         mapping = cmp.mapping.preset.insert {
           -- Select the [n]ext item
-          ['<C-n>'] = cmp.mapping.select_next_item(),
+          ['<C-k>'] = cmp.mapping.select_next_item(),
           -- Select the [p]revious item
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-K>'] = cmp.mapping.select_prev_item(),
 
           -- Scroll the documentation window [b]ack / [f]orward
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
