@@ -1,3 +1,3 @@
 # things to do
-- [ ] - : issue
-- [ ] lang server weirdness
+- [*] - : issue
+- [*] lang server weirdness
