@@ -47,3 +47,6 @@ map('', '<C-w><C-n>', '<C-w>K', opts) -- Move current window to the top
 map('', '<C-w><C-e>', '<C-w>J', opts) -- Move current window to the bottom
 map('', '<C-w><C-i>', '<C-w>L', opts) -- Move current window to the right
 map('', '<C-w><C-m>', '<C-w>H', opts) -- Move current window to the left
+
+-- Primogen shit
+map('x', '<leader>p', '"_dP', opts) -- Paste without overwriting the clipboardap("<leader>
