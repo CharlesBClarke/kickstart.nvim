@@ -2,10 +2,10 @@ local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
 -- Lowercase -> command, Uppercase -> uppercase form
-map('', 'n', 'gj', opts) -- Move cursor down by display line
+map('', 'n', 'j', opts) -- Move cursor down by display line
 map('', 'N', 'J', opts) -- Uppercase variant
 
-map('', 'e', 'gk', opts) -- Move cursor up by display line
+map('', 'e', 'k', opts) -- Move cursor up by display line
 map('', 'E', 'K', opts) -- Uppercase variant
 
 map('', 'i', 'l', opts) -- Move cursor right
