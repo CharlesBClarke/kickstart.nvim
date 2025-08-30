@@ -91,6 +91,10 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 -- mappings for colmark-dh
 require 'mappings'
+
+local mm = require 'Smappings.engine'
+require 'Smappings.defs'(mm)
+mm.setup { default = 'colemak' }
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
