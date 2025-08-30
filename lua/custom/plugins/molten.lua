@@ -15,6 +15,8 @@ return {
     '3rd/image.nvim',
     opts = {
       backend = 'kitty', -- whatever backend you would like to use
+      molten_auto_open_output = false,
+      molten_output_virt_lines = true,
       max_width = 100,
       max_height = 12,
       max_height_window_percentage = math.huge,
