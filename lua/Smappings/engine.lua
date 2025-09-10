@@ -1,4 +1,3 @@
--- minimal layout switcher (no 'both'), global-only
 local M = {}
 
 local map, del = vim.keymap.set, vim.keymap.del

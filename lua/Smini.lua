@@ -1,31 +1,42 @@
--- Better Around/Inside textobjects
+---- ~/.config/nvim/lua/Smini/init.lua
+--local mm = require 'Smappings.engine'
 --
--- Examples:
---  - va)  - [V]isually select [A]round [)]paren
---  - yinq - [Y]ank [I]nside [N]ext [Q]uote
---  - ci'  - [C]hange [I]nside [']quote
-require('mini.ai').setup {
-  mappings = {
-    -- Main textobject prefixes
-    around = 'a',
-    inside = 't',
-
-    -- Next/last textobjects
-    around_next = 'ak',
-    inside_next = 'tk',
-    around_last = 'al',
-    inside_last = 'tl',
-
-    -- Move cursor to corresponding edge of `a` textobject
-    goto_left = 'g[',
-    goto_right = 'g]',
-  },
-  n_lines = 500,
-}
-
--- Add/delete/replace surroundings (brackets, quotes, etc.)
+---- keep original
+--local _set = mm.set_layout
 --
--- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
--- - sd'   - [S]urround [D]elete [']quotes
--- - sr)'  - [S]urround [R]eplace [)] [']
-require('mini.surround').setup()
+--mm.set_layout = function(layout)
+--  _set(layout)
+--
+--  if layout == 'qwerty' then
+--    require('mini.ai').setup {
+--      mappings = {
+--        -- QWERTY defaults
+--        inside = 'i',
+--        around_next = 'an',
+--        inside_next = 'in',
+--        around_last = 'al',
+--        inside_last = 'il',
+--      },
+--    }
+--  else -- Colemak
+--    require('mini.ai').setup {
+--      mappings = {
+--        inside = 't',
+--        around_next = 'ak',
+--        inside_next = 'tk',
+--        around_last = 'ai',
+--        inside_last = 'ti',
+--      },
+--    }
+--  end
+--end
+--
+---- reapply once plugins are loaded
+--vim.api.nvim_create_autocmd('User', {
+--  pattern = 'LazyDone',
+--  callback = function()
+--    mm.set_layout(mm.layout)
+--  end,
+--})
+----require('mini.surround').setup()
+vim.keymap.set({ 'o', 'x' }, 'i', '<Nop>')
